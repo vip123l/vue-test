@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .left,.right{
+    	width: 250px;
+    	height: 300px;
+    	float: left;
+    	border: 1px solid #ddd;
+    }
+    .center{float: left;width: 50px;height: 50px;border: 1px solid #000}
+    .left{margin-right: 20px;}
+</style>
+<body>
+<div id="box">
+    <div class="left">
+    	<p v-for="(item,index) in list1"><input type="checkbox" v-model="item.select">{{item.title}}</p>
+    </div>
+    <div class="center" @click="add()">>></div>
+    <div class="right">
+    	<p v-for="item in list2">{{item.title}}</p>
+    </div>
+</div>
+</body>
+<script src="js/vue.js"></script>
+<script>
+var shuju1=['选项1','选项2','选项3','选项4'];
+var shuju2=['选项11','选项22','选项33','选项44'];
+
+    var vm = new Vue({
+        el:"#box",
+        data : {
+		    list1: [],
+		    list2: []
+		    
+		},
+        created:function(){
+        	var arr = [];
+        	for(x in shuju1){
+        		arr.push({title:shuju1[x],select:false})
+        	}
+
+        	this.list1=arr;
+        	this.list2=shuju2.map(function(val){return {title:val,select:false}})
+        },
+        methods:{
+        	add:function(){
+        		// this.list2=this.list2.concat(this.list1.filter(function(item){return item.select}));
+        		// this.list1=this.list1.filter(function(item){return !item.select});
+        		var list3 = [];
+        		for(var i=0,len=this.list1.length;i<len;i++){
+        			if(this.list1[i].select==true){
+        				this.list1[i].select=false;
+        				this.list2.push(this.list1[i]);
+        				
+        			}else{
+        				list3.push(this.list1[i]);
+        				
+        			}
+        		}
+        			this.list1=list3
+        	}
+        },
+        beforeUpdate:function(){
+        	alert(this.list2)
+        } 
+    })
+</script>
+</html>

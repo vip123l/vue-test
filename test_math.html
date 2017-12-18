@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		td{width: 30px;font-size: 16px;height: 30px;cursor: pointer;}
+	</style>
+</head>
+<body>
+<div id="table">
+	<math></math>
+</div>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+	<script>
+	Vue.component('math', {
+	  template:`
+			<table border="1">
+				<tr><td colspan="4">总和{{sum}}</td></tr>
+				<tr><td colspan="4">一{{num1}}</td></tr>
+				<tr><td colspan="4">二{{num2}}</td></tr>
+				
+				<tr><td @click="back()">后退</td></tr>
+				<tr>
+					<td @click="getfu(-1)">*</td>
+					<td @click="getfu(-2)">÷</td>
+					<td @click="getfu(-3)">+</td>
+					<td @click="getfu(-4)">-</td>
+				</tr>
+				<tr>
+					<td @click="getValue(1)">1</td>
+					<td @click="getValue(2)">2</td>
+					<td @click="getValue(3)">3</td>
+					<td @click="empty()">清空</td>
+				</tr>
+				<tr>
+					<td @click="getValue(4)">4</td>
+					<td @click="getValue(5)">5</td>
+					<td @click="getValue(6)">6</td>
+					<td @click="getValue(0)">0</td>
+				</tr>
+				<tr>
+					<td @click="getValue(7)">7</td>
+					<td @click="getValue(8)">8</td>
+					<td @click="getValue(9)">9</td>
+					<td @click="sumTotal()">=</td>
+				</tr>
+			</table>`,
+		data:function(){
+			return{
+				num1:'',
+				num2:'',
+				fu:'',
+				sum:''
+			}
+		},
+			methods:{
+				getValue:function  (val) {
+					if(this.fu<0){
+						this.num2+=val;
+						this.sum=this.num2
+					}else{
+						this.num1+=val;
+						this.sum=this.num1
+					}
+				},
+				getfu:function  (fu) {			
+					this.fu=fu;
+				},
+				sumTotal:function(){
+					if(this.num1==this.sum){
+						return 
+					}else{
+						this.sum = ''
+						switch(this.fu)
+						{
+							case -1:
+							  this.sum =parseInt(this.num1)*parseInt(this.num2)
+							  break;
+							case -2:
+							  this.sum = parseInt(this.num1)/parseInt(this.num2)
+							  break;
+							case -3:
+							  this.sum = parseInt(this.num1)+parseInt(this.num2);
+							 
+							  break;
+							case -4:
+							  this.sum = parseInt(this.num1)-parseInt(this.num2)
+							  break;
+						}
+					}
+					this.num1 = this.sum;
+					this.num2=''	
+				},
+				empty:function(){
+					this.sum = '';
+					this.num2='';
+					this.num1='';
+					this.fu=''
+				},
+				back:function(){
+					if(this.fu<0){
+						this.num2=this.num2.substring(0,this.num2.length-1);
+						this.sum=this.num2
+					}else{
+						this.num1=this.num1.substring(0,this.num1.length-1);
+						this.sum=this.num1
+					}
+				}
+			}
+	})
+		new Vue({
+			el:"#table"
+		})
+	</script>
+</body>
+</html>

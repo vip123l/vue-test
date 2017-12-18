@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+        <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+        <style type="text/css">
+            .inputPadding{
+                width: 30%;
+                margin: 0 auto;
+                margin-top: 5%;
+            }
+            .input-group {
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box">
+            <div class="inputPadding">
+                <div class="input-group">
+                    <span class="input-group-addon">用户名</span>
+                     <input type="text" class="form-control" placeholder="请输入用户名" v-model="user">
+                </div>
+                <br /><br />
+                <div class="input-group">
+                    <span class="input-group-addon">&nbsp;密&nbsp;&nbsp;码&nbsp;</span>
+                    <input type="text" class="form-control" placeholder="请输入密码" v-model="pass">
+                </div>
+                <br /><br />
+                <div class="input-group">
+                    <button type="button" class="btn btn-primary" @click="submit()"> 提 交 </button>
+                </div>
+            </div>
+            <hr />
+            <table class="table table-striped text-center">
+                <caption class="h3 text-center">数据列表</caption>
+                <tr>
+                    <th class="text-center">序号</th>
+                    <th class="text-center">名字</th>
+                    <th class="text-center">密码</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                <tr v-for="(item,index) in myData">
+                    <td>{{index+1}}</td>
+                    <td>{{item.user}}</td>
+                    <td>{{item.pass}}</td>
+                    <td>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#myModal" @click="delone(index)">删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button type="button" class="btn" data-toggle="modal" data-target="#myModal">全部删除</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">暂无数据</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+    window.onload = function(){
+        new Vue({
+            el: '#box',
+           	data:{
+           		user:'',
+           		pass:'',
+           		myData:[],
+
+           	},
+           	methods:{
+           		submit: function(){
+                    this.myData.push({
+                        user: this.user,
+                        pass: this.pass
+                    })
+                    this.user="";
+                    this.pass="";
+                },
+                delone:function(index){
+                	this.myData.splice(index,1)
+                }
+           	}
+        })
+    }
+</script>

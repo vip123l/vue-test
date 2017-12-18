@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js?callback=cc"></script>
+	<style>
+		input{
+			width: 150px;
+			line-height: 30px;
+			font-size: 16px;
+		}
+		.messages{
+			width: 150px;margin-top: 20px;
+			border: 1px solid #ddd;
+			height:100px; 
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<input type="text" v-model="val"><input type="submit" value="搜索" @click="search()">
+		<div class="messages"></div>
+	</div>
+	<script src="js/vue.js"></script>
+	<script>
+	function cc(){
+		alert(1)
+	}
+		new Vue({
+			el:"#box",
+			data:{
+				val:'15242209179'
+				
+			},
+			methods:{
+				search:function(){
+					url="http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel="+this.val
+					var script = document.createElement('script');
+					script.src = url;
+					document.body.insertBefore(script, document.body.firstChild);		
+					console.log(__GetZoneResult_.province);
+				}
+			}
+		})
+// function handleResponse(response){
+//     console.log('The responsed data is: '+response.data);
+// }
+// var script = document.createElement('script');
+// script.src = 'http://www.baidu.com/json/?callback=handleResponse';
+// document.body.insertBefore(script, document.body.firstChild);		
+	</script>
+
+</body>
+</html>
